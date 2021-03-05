@@ -1,13 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>JS Reference VS Copy</title>
-</head>
-<body>
+# Day 14 References VS Copying
 
-  <script>
-    // start with strings, numbers and booleans
+Date: 2021/03/05
+
+JavaScript: Array Copy, Array.from, Object Copy, Value Copy, assign, concat, slice
+
+link: https://www.youtube.com/watch?v=YnfwDQ5XYF4&feature=emb_imp_woyt
+
+## 프로그램 설명(구현해야 할 부분)
+
+### 구현 **코드**
+
+- javascript
+
+```jsx
+// start with strings, numbers and booleans
     // let age = 100;
     // let age2 = age;
     // console.log(age, age2);
@@ -89,12 +95,79 @@
     console.log(wes);
 
     const dev = Object.assign({}, wes);
-    dev.social.twitter = 'change';
-    console.log(wes);
+
     const dev2 = JSON.parse(JSON.stringify(wes));
+```
 
+# 사용된 개념
 
-  </script>
+## JavaScipt
 
-</body>
-</html>
+### 값 복사(number, string)
+
+- `=` 사용해서 복사
+
+```jsx
+let age = 100;
+let age2 = age;
+console.log(age, age2); // 100, 100
+age = 200;
+console.log(age, age2); // 200, 100
+```
+
+### 배열 복사
+
+- `=` 사용해서 복사 ⇒ 복사 아닌 참조
+
+```jsx
+const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];const
+```
+
+```jsx
+const team1 = players.slice();
+const team2 = [].concat(players);
+const team3 = [...players];
+const team4 = Array.from(players);
+```
+
+- slice(), concat()은 대상 배열을 가지고 새로운 배열 반환
+
+### 객체 복사
+
+- `=` 사용해서 복사 ⇒ 복사 아닌 참조
+
+```jsx
+const person = {
+	name : 'pp'
+	age : 80
+}
+
+const wes = {
+      name: 'Wes',
+      age: 100,
+      social: {
+        twitter: '@wesbos',
+        facebook: 'wesbos.developer'
+      }
+    };
+```
+
+**One Level Copy - Object.assign()**
+
+- 열거할 수 있는 하나 이상의 출처 객체로부터 대상 객체로 속성을 복사할 때 사용
+
+```jsx
+const cap1 = Object.assign({}, person, {number : 99});
+```
+
+**One Level 이상 Copy - JSON.parse(JSON.stringfy())**
+
+```jsx
+const dev = Object.assign({}, wes);
+dev.social.twitter = '@change';
+console.log(wes.social.twitter); //wes.social.twitter값 바뀌어 있다.
+
+const dev2 = JSON.parse(JSON.stringfy(wes));
+```
+
+> [https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/assign](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
